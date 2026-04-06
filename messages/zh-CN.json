@@ -1,0 +1,44 @@
+{
+  "common": {
+    "siteName": "博多一瑞亭",
+    "reserve": "预约",
+    "agency": "旅行社咨询",
+    "back": "返回",
+    "submit": "提交",
+    "loading": "加载中...",
+    "required": "必填"
+  },
+  "reserve": {
+    "title": "预约",
+    "name": "姓名",
+    "email": "电子邮件",
+    "phone": "电话（选填）",
+    "nationality": "国籍（选填）",
+    "date": "到店日期",
+    "time": "到店时间",
+    "partySize": "人数",
+    "course": "选择套餐",
+    "notes": "过敏/特殊要求",
+    "confirm": "确认预约",
+    "total": "合计",
+    "pay": "支付并确认",
+    "complete": "预约已确认！",
+    "completeMsg": "确认邮件已发送至您的邮箱。"
+  },
+  "agency": {
+    "title": "旅行社预约",
+    "subtitle": "9人以上团体",
+    "agencyName": "旅行社名称",
+    "contactName": "联系人",
+    "tourCode": "团号",
+    "billingInfo": "账单信息",
+    "specialNotes": "特别说明",
+    "submitted": "咨询已提交",
+    "submittedMsg": "我们的团队将审核您的请求，确认后将发送付款链接。"
+  },
+  "email": {
+    "confirmSubject": "预约确认 - 博多一瑞亭",
+    "reminderSubject": "提醒：您在博多一瑞亭的预约",
+    "cancelSubject": "预约已取消 - 博多一瑞亭"
+  }
+}

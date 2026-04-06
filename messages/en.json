@@ -1,0 +1,44 @@
+{
+  "common": {
+    "siteName": "Hakata Issuitei",
+    "reserve": "Make a Reservation",
+    "agency": "Travel Agency Inquiry",
+    "back": "Back",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "required": "Required"
+  },
+  "reserve": {
+    "title": "Make a Reservation",
+    "name": "Full Name",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "nationality": "Nationality (optional)",
+    "date": "Visit Date",
+    "time": "Visit Time",
+    "partySize": "Party Size",
+    "course": "Select Course",
+    "notes": "Allergies / Special Requests",
+    "confirm": "Proceed to Confirmation",
+    "total": "Total",
+    "pay": "Pay & Confirm",
+    "complete": "Reservation Confirmed!",
+    "completeMsg": "A confirmation email has been sent to your email address."
+  },
+  "agency": {
+    "title": "Travel Agency Reservation",
+    "subtitle": "For groups of 9 or more guests",
+    "agencyName": "Agency Name",
+    "contactName": "Contact Person",
+    "tourCode": "Tour Code",
+    "billingInfo": "Billing Information",
+    "specialNotes": "Special Notes",
+    "submitted": "Inquiry Submitted",
+    "submittedMsg": "Our team will review your request and send you a payment link once confirmed."
+  },
+  "email": {
+    "confirmSubject": "Reservation Confirmed - Hakata Issuitei",
+    "reminderSubject": "Reminder: Your reservation at Hakata Issuitei",
+    "cancelSubject": "Reservation Cancelled - Hakata Issuitei"
+  }
+}

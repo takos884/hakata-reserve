@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ReservationType {
+  INDIVIDUAL
+  AGENCY
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  NO_SHOW
+}
+
+enum InquiryStatus {
+  NEW
+  IN_PROGRESS
+  CONFIRMED
+  CANCELLED
+}
+
+model Reservation {
+  id                    String            @id @default(cuid())
+  type                  ReservationType
+  status                ReservationStatus @default(PENDING)
+  name                  String
+  email                 String
+  phone                 String?
+  nationality           String?
+  visitDate             DateTime
+  visitTime             String
+  partySize             Int
+  courseId               String?
+  course                Course?           @relation(fields: [courseId], references: [id])
+  notes                 String?
+  lang                  String            @default("en")
+  stripePaymentIntentId String?
+  amountPaid            Int?
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  adminNotes            String?
+
+  @@index([visitDate])
+  @@index([status])
+}
+
+model AgencyInquiry {
+  id               String        @id @default(cuid())
+  agencyName       String
+  contactName      String
+  email            String
+  phone            String
+  tourCode         String?
+  visitDate        DateTime
+  partySize        Int
+  billingInfo      String
+  notes            String?
+  status           InquiryStatus @default(NEW)
+  stripePaymentLink String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([visitDate])
+  @@index([status])
+}
+
+model Course {
+  id           String        @id @default(cuid())
+  nameJa       String
+  nameEn       String
+  nameZhCN     String
+  nameZhTW     String
+  nameKo       String
+  nameTh       String
+  price        Int
+  description  String?
+  isActive     Boolean       @default(true)
+  reservations Reservation[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model BlockedDate {
+  id   String   @id @default(cuid())
+  date DateTime @unique
+  note String?
+}
+
+model CancellationPolicy {
+  id             String @id @default(cuid())
+  daysBeforeMin  Int
+  daysBeforeMax  Int?
+  feePercent     Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([daysBeforeMin])
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+}
