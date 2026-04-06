@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 
 const fallbackCourses = [
@@ -28,7 +27,7 @@ const fallbackCourses = [
     isActive: true,
   },
   {
-    id: "ramen-+-extra-noodles-set",
+    id: "ramen-extra-noodles-set",
     nameJa: "替え玉セット",
     nameEn: "Ramen + Extra Noodles Set",
     nameZhCN: "拉面+加面套餐",
@@ -53,19 +52,26 @@ const fallbackCourses = [
   },
 ];
 
+function isDbConfigured() {
+  const url = process.env.DATABASE_URL || "";
+  return url.length > 0 && !url.includes("placeholder");
+}
+
 export async function GET() {
+  if (!isDbConfigured()) {
+    return NextResponse.json(fallbackCourses);
+  }
+
   try {
+    const { prisma } = await import("@/lib/prisma");
     const courses = await prisma.course.findMany({
       where: { isActive: true },
       orderBy: { createdAt: "asc" },
     });
-    if (courses.length > 0) {
-      return NextResponse.json(courses);
-    }
+    return NextResponse.json(courses.length > 0 ? courses : fallbackCourses);
   } catch {
-    // DB unavailable — use fallback
+    return NextResponse.json(fallbackCourses);
   }
-  return NextResponse.json(fallbackCourses);
 }
 
 export async function POST(request: NextRequest) {
@@ -74,6 +80,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const { prisma } = await import("@/lib/prisma");
   const body = await request.json();
   const course = await prisma.course.create({ data: body });
   return NextResponse.json(course, { status: 201 });
