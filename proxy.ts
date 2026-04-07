@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const locales = ["en", "zh-CN", "zh-TW", "ko", "th"];
-const defaultLocale = "en";
+const locales = ["ja", "en", "zh-CN", "zh-TW", "ko", "th"];
+const defaultLocale = "ja";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -41,6 +41,7 @@ export function proxy(request: NextRequest) {
     if (acceptLang.includes("zh")) detectedLocale = "zh-CN";
     else if (acceptLang.includes("ko")) detectedLocale = "ko";
     else if (acceptLang.includes("th")) detectedLocale = "th";
+    else if (acceptLang.includes("en")) detectedLocale = "en";
   }
 
   // Redirect to localized path
