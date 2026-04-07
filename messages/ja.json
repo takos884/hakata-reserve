@@ -1,0 +1,44 @@
+{
+  "common": {
+    "siteName": "博多一瑞亭",
+    "reserve": "ご予約",
+    "agency": "旅行代理店お問い合わせ",
+    "back": "戻る",
+    "submit": "送信",
+    "loading": "読み込み中...",
+    "required": "必須"
+  },
+  "reserve": {
+    "title": "ご予約",
+    "name": "お名前",
+    "email": "メールアドレス",
+    "phone": "電話番号（任意）",
+    "nationality": "国籍（任意）",
+    "date": "ご来店日",
+    "time": "ご来店時間",
+    "partySize": "人数",
+    "course": "コースを選択",
+    "notes": "アレルギー・ご要望",
+    "confirm": "確認画面へ進む",
+    "total": "合計",
+    "pay": "お支払い・予約確定",
+    "complete": "ご予約確定！",
+    "completeMsg": "確認メールをお送りしました。メールをご確認ください。"
+  },
+  "agency": {
+    "title": "旅行代理店予約",
+    "subtitle": "9名様以上の団体のお客様",
+    "agencyName": "旅行代理店名",
+    "contactName": "担当者名",
+    "tourCode": "ツアーコード",
+    "billingInfo": "請求先情報",
+    "specialNotes": "備考",
+    "submitted": "お問い合わせ受付完了",
+    "submittedMsg": "内容を確認の上、お支払いリンクをお送りいたします。"
+  },
+  "email": {
+    "confirmSubject": "ご予約確認 - 博多一瑞亭",
+    "reminderSubject": "リマインダー：博多一瑞亭のご予約",
+    "cancelSubject": "ご予約キャンセル - 博多一瑞亭"
+  }
+}

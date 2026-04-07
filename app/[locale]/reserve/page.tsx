@@ -24,6 +24,33 @@ const timeSlots = [
 ];
 
 const labels: Record<string, Record<string, string>> = {
+  ja: {
+    title: "ご予約",
+    titleJa: "ご予約",
+    back: "← 戻る",
+    name: "お名前",
+    email: "メールアドレス",
+    phone: "電話番号（任意）",
+    nationality: "国籍（任意）",
+    date: "ご来店日",
+    time: "ご来店時間",
+    partySize: "人数",
+    course: "コースを選択",
+    notes: "アレルギー・ご要望",
+    next: "確認画面へ進む",
+    selectTime: "時間を選択",
+    selectCourse: "コースを選択",
+    persons: "名",
+    totalLabel: "合計",
+    sectionPersonal: "お客様情報",
+    sectionVisit: "ご来店情報",
+    placeholderName: "お名前を入力",
+    placeholderEmail: "your@email.com",
+    placeholderPhone: "+81...",
+    placeholderNationality: "例：日本",
+    placeholderNotes: "アレルギー、食事制限、ご要望など...",
+    perPerson: "/ 1名様",
+  },
   en: {
     title: "Make a Reservation",
     titleJa: "ご予約",
@@ -42,6 +69,14 @@ const labels: Record<string, Record<string, string>> = {
     selectCourse: "Select a course",
     persons: "persons",
     totalLabel: "Total",
+    sectionPersonal: "Personal Information",
+    sectionVisit: "Visit Details",
+    placeholderName: "Your full name",
+    placeholderEmail: "your@email.com",
+    placeholderPhone: "+81...",
+    placeholderNationality: "e.g. Japan",
+    placeholderNotes: "Allergies, dietary restrictions, special requests...",
+    perPerson: "/ person",
   },
   "zh-CN": {
     title: "预约",
@@ -61,6 +96,14 @@ const labels: Record<string, Record<string, string>> = {
     selectCourse: "选择套餐",
     persons: "人",
     totalLabel: "合计",
+    sectionPersonal: "个人信息",
+    sectionVisit: "到店详情",
+    placeholderName: "请输入姓名",
+    placeholderEmail: "your@email.com",
+    placeholderPhone: "+81...",
+    placeholderNationality: "例：日本",
+    placeholderNotes: "过敏、饮食要求、特殊需求...",
+    perPerson: "/ 每人",
   },
   "zh-TW": {
     title: "預約",
@@ -80,6 +123,14 @@ const labels: Record<string, Record<string, string>> = {
     selectCourse: "選擇套餐",
     persons: "人",
     totalLabel: "合計",
+    sectionPersonal: "個人資訊",
+    sectionVisit: "到店詳情",
+    placeholderName: "請輸入姓名",
+    placeholderEmail: "your@email.com",
+    placeholderPhone: "+81...",
+    placeholderNationality: "例：日本",
+    placeholderNotes: "過敏、飲食要求、特殊需求...",
+    perPerson: "/ 每人",
   },
   ko: {
     title: "예약하기",
@@ -99,6 +150,14 @@ const labels: Record<string, Record<string, string>> = {
     selectCourse: "코스 선택",
     persons: "명",
     totalLabel: "합계",
+    sectionPersonal: "개인 정보",
+    sectionVisit: "방문 정보",
+    placeholderName: "이름을 입력하세요",
+    placeholderEmail: "your@email.com",
+    placeholderPhone: "+81...",
+    placeholderNationality: "예: 일본",
+    placeholderNotes: "알레르기, 식이 제한, 특별 요청...",
+    perPerson: "/ 1인",
   },
   th: {
     title: "จองที่นั่ง",
@@ -118,11 +177,20 @@ const labels: Record<string, Record<string, string>> = {
     selectCourse: "เลือกคอร์ส",
     persons: "คน",
     totalLabel: "รวม",
+    sectionPersonal: "ข้อมูลส่วนตัว",
+    sectionVisit: "รายละเอียดการเยี่ยมชม",
+    placeholderName: "กรอกชื่อของคุณ",
+    placeholderEmail: "your@email.com",
+    placeholderPhone: "+81...",
+    placeholderNationality: "เช่น ญี่ปุ่น",
+    placeholderNotes: "อาการแพ้ ข้อจำกัดด้านอาหาร คำขอพิเศษ...",
+    perPerson: "/ คน",
   },
 };
 
 function getCourseName(course: Course, locale: string) {
   const map: Record<string, keyof Course> = {
+    ja: "nameJa",
     en: "nameEn",
     "zh-CN": "nameZhCN",
     "zh-TW": "nameZhTW",
@@ -205,7 +273,7 @@ export default function ReservePage() {
           {/* Personal Info */}
           <div className="bg-[#111] border border-[#222] p-6 space-y-5">
             <p className="text-[#d4a853] text-xs tracking-[0.3em] uppercase pb-3 border-b border-[#222]">
-              Personal Information
+              {t.sectionPersonal}
             </p>
 
             <div>
@@ -213,7 +281,7 @@ export default function ReservePage() {
               <input
                 {...register("name")}
                 className={inputClass}
-                placeholder="Your full name"
+                placeholder={t.placeholderName}
               />
               {errors.name && (
                 <p className="text-red-400 text-xs mt-1.5">{errors.name.message}</p>
@@ -226,7 +294,7 @@ export default function ReservePage() {
                 {...register("email")}
                 type="email"
                 className={inputClass}
-                placeholder="your@email.com"
+                placeholder={t.placeholderEmail}
               />
               {errors.email && (
                 <p className="text-red-400 text-xs mt-1.5">{errors.email.message}</p>
@@ -239,7 +307,7 @@ export default function ReservePage() {
                 <input
                   {...register("phone")}
                   className={inputClass}
-                  placeholder="+81..."
+                  placeholder={t.placeholderPhone}
                 />
               </div>
               <div>
@@ -247,7 +315,7 @@ export default function ReservePage() {
                 <input
                   {...register("nationality")}
                   className={inputClass}
-                  placeholder="e.g. Japan"
+                  placeholder={t.placeholderNationality}
                 />
               </div>
             </div>
@@ -256,7 +324,7 @@ export default function ReservePage() {
           {/* Visit Details */}
           <div className="bg-[#111] border border-[#222] p-6 space-y-5">
             <p className="text-[#d4a853] text-xs tracking-[0.3em] uppercase pb-3 border-b border-[#222]">
-              Visit Details
+              {t.sectionVisit}
             </p>
 
             <div className="grid grid-cols-2 gap-4">
@@ -341,14 +409,14 @@ export default function ReservePage() {
                           <p className={`text-sm font-light tracking-wider ${isSelected ? "text-gray-100" : "text-gray-300"}`}>
                             {getCourseName(course, locale)}
                           </p>
-                          <p className="text-gray-600 text-xs tracking-wider">{course.nameJa}</p>
+                          {locale !== "ja" && <p className="text-gray-600 text-xs tracking-wider">{course.nameJa}</p>}
                         </div>
                       </div>
                       <div className="text-right ml-4">
                         <p className={`text-base font-light ${isSelected ? "text-[#d4a853]" : "text-gray-400"}`}>
                           ¥{course.price.toLocaleString()}
                         </p>
-                        <p className="text-gray-600 text-xs">/ person</p>
+                        <p className="text-gray-600 text-xs">{t.perPerson}</p>
                       </div>
                       <input
                         type="radio"
@@ -392,7 +460,7 @@ export default function ReservePage() {
               {...register("notes")}
               rows={3}
               className={`${inputClass} resize-none`}
-              placeholder="Allergies, dietary restrictions, special requests..."
+              placeholder={t.placeholderNotes}
             />
           </div>
 

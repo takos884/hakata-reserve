@@ -8,6 +8,13 @@ export default async function CompletePage({
   const { locale } = await params;
 
   const messages: Record<string, { title: string; subtitle: string; body: string; note: string; home: string }> = {
+    ja: {
+      title: "ご予約確定",
+      subtitle: "ご予約ありがとうございます",
+      body: "博多一瑞亭のご予約ありがとうございます。ご予約の詳細を記載した確認メールをお送りいたしました。",
+      note: "予約詳細およびキャンセルポリシーについてはメールをご確認ください。",
+      home: "ホームに戻る",
+    },
     en: {
       title: "Reservation Confirmed",
       subtitle: "ご予約ありがとうございます",
@@ -94,7 +101,7 @@ export default async function CompletePage({
         {/* Restaurant info reminder */}
         <div className="mb-8 space-y-1">
           <p className="text-[#d4a853]/80 text-sm tracking-wider">博多一瑞亭</p>
-          <p className="text-gray-600 text-xs tracking-wider">Mita, Minato-ku, Tokyo</p>
+          <p className="text-gray-600 text-xs tracking-wider">5-14-1 Shiba, Minato-ku, Tokyo</p>
           <p className="text-gray-600 text-xs tracking-wider">Lunch 11:00–14:00 · Dinner 17:00–21:00</p>
         </div>
 

@@ -37,6 +37,7 @@ export default async function AgenciesPage() {
               <th className="text-left px-4 py-3">担当者</th>
               <th className="text-left px-4 py-3">来店希望日</th>
               <th className="text-left px-4 py-3">人数</th>
+              <th className="text-left px-4 py-3">特記事項</th>
               <th className="text-left px-4 py-3">ステータス</th>
               <th className="text-left px-4 py-3">操作</th>
             </tr>
@@ -50,6 +51,13 @@ export default async function AgenciesPage() {
                   {inq.visitDate.toLocaleDateString("ja-JP")}
                 </td>
                 <td className="px-4 py-3">{inq.partySize}名</td>
+                <td className="px-4 py-3 max-w-[200px]">
+                  {inq.notes ? (
+                    <span className="text-gray-700 text-xs line-clamp-2">{inq.notes}</span>
+                  ) : (
+                    <span className="text-gray-400 text-xs">-</span>
+                  )}
+                </td>
                 <td className="px-4 py-3">
                   <span
                     className={`px-2 py-1 rounded-full text-xs ${statusColors[inq.status]}`}
@@ -64,7 +72,7 @@ export default async function AgenciesPage() {
             ))}
             {inquiries.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
                   問い合わせがありません
                 </td>
               </tr>

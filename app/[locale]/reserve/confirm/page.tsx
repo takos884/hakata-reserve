@@ -22,6 +22,24 @@ type ReservationData = {
 };
 
 const confirmLabels: Record<string, Record<string, string>> = {
+  ja: {
+    title: "予約内容の確認",
+    titleJa: "予約内容の確認",
+    name: "お名前",
+    email: "メールアドレス",
+    date: "ご来店日",
+    time: "ご来店時間",
+    partySize: "人数",
+    phone: "電話番号",
+    nationality: "国籍",
+    notes: "備考",
+    total: "合計金額",
+    back: "← 修正する",
+    pay: "お支払い・予約確定",
+    processing: "処理中...",
+    persons: "名様",
+    sectionDetails: "予約詳細",
+  },
   en: {
     title: "Confirm Reservation",
     titleJa: "予約内容の確認",
@@ -208,7 +226,7 @@ export default function ConfirmPage() {
         {/* Reservation Summary */}
         <div className="bg-[#111] border border-[#222] p-6 mb-6">
           <p className="text-[#d4a853] text-xs tracking-[0.3em] uppercase pb-4 border-b border-[#222] mb-2">
-            Reservation Details
+            {t.sectionDetails || "Reservation Details"}
           </p>
 
           <div className="space-y-0">
@@ -240,7 +258,7 @@ export default function ConfirmPage() {
             )}
             {data.nationality && (
               <div className={rowClass}>
-                <span className={labelClass}>Nationality</span>
+                <span className={labelClass}>{t.nationality || "Nationality"}</span>
                 <span className={valueClass}>{data.nationality}</span>
               </div>
             )}

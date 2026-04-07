@@ -22,6 +22,48 @@ const chatData: Record<string, {
   noMatch: string;
   faqs: FAQ[];
 }> = {
+  ja: {
+    title: "博多一瑞亭",
+    subtitle: "チャットサポート",
+    placeholder: "ご質問を入力してください...",
+    greeting: "博多一瑞亭へようこそ！ご予約・メニュー・アクセスなど、お気軽にお問い合わせください。以下のよくある質問からもお選びいただけます。",
+    faqLabel: "よくあるご質問",
+    noMatch: "お問い合わせありがとうございます。詳しくは issuitei000@gmail.com までメール、または営業時間中にお電話ください。ウェブサイトから直接ご予約いただくこともできます。",
+    faqs: [
+      {
+        question: "予約方法を教えてください",
+        answer: "ウェブサイトからオンラインでご予約いただけます。個人・グループ（1〜8名）はオンライン決済の予約フォームをご利用ください。9名以上の団体は旅行代理店お問い合わせフォームからどうぞ。お支払いリンクをお送りいたします。",
+      },
+      {
+        question: "営業時間は？",
+        answer: "ランチ：11:00〜14:00（ラストオーダー 13:30）\nディナー：17:00〜21:00（ラストオーダー 20:30）\n祝日は休業です。最新のスケジュールはウェブサイトをご確認ください。",
+      },
+      {
+        question: "お店はどこにありますか？",
+        answer: "東京都港区芝5丁目14-1にございます。最寄り駅は三田駅（都営三田線・都営浅草線）で、A3出口から徒歩約3分です。",
+      },
+      {
+        question: "メニューは？",
+        answer: "看板メニューは18時間以上炊き上げた本場博多豚骨ラーメンです。\n• 博多豚骨ラーメン — ¥1,200\n• 特製豚骨ラーメン — ¥1,500\n• 替え玉セット — ¥1,600\n• おまかせコース — ¥3,000\nサイドメニュー、餃子、ドリンクもございます。",
+      },
+      {
+        question: "アレルギー対応はできますか？",
+        answer: "はい、予約フォームにてアレルギーや食事制限をご記入ください。ラーメンには豚肉、小麦、大豆、卵が含まれます。できる限り対応いたします。",
+      },
+      {
+        question: "キャンセルポリシーは？",
+        answer: "• 8日以上前：無料キャンセル\n• 3〜7日前：30%のキャンセル料\n• 1〜2日前：50%のキャンセル料\n• 当日・無断キャンセル：100%のキャンセル料\n返金はStripeを通じて処理されます。",
+      },
+      {
+        question: "テイクアウトはできますか？",
+        answer: "はい！営業時間中にテイクアウトをご利用いただけます。店舗にて直接ご注文ください。",
+      },
+      {
+        question: "クレジットカードは使えますか？",
+        answer: "はい、Visa、Mastercard、Amex、JCBなど主要クレジットカードをご利用いただけます。店内でのお支払い、オンライン予約決済（Stripe）いずれも対応しています。",
+      },
+    ],
+  },
   en: {
     title: "Hakata Issuitei",
     subtitle: "Chat Support",
@@ -40,7 +82,7 @@ const chatData: Record<string, {
       },
       {
         question: "Where is the restaurant located?",
-        answer: "We are located in Mita, Minato-ku, Tokyo. The nearest station is Mita Station (Toei Mita Line / Toei Asakusa Line). About a 3-minute walk from Exit A3.",
+        answer: "We are located at 5-14-1 Shiba, Minato-ku, Tokyo. The nearest station is Mita Station (Toei Mita Line / Toei Asakusa Line). About a 3-minute walk from Exit A3.",
       },
       {
         question: "What's on the menu?",
@@ -82,7 +124,7 @@ const chatData: Record<string, {
       },
       {
         question: "餐厅在哪里？",
-        answer: "我们位于东京都港区三田。最近车站为三田站（都营三田线/都营浅草线），从A3出口步行约3分钟。",
+        answer: "我们位于东京都港区芝5丁目14-1。最近车站为三田站（都营三田线/都营浅草线），从A3出口步行约3分钟。",
       },
       {
         question: "有什么菜品？",
@@ -116,7 +158,7 @@ const chatData: Record<string, {
       },
       {
         question: "餐廳在哪裡？",
-        answer: "我們位於東京都港區三田。最近車站為三田站（都營三田線/都營淺草線），從A3出口步行約3分鐘。",
+        answer: "我們位於東京都港區芝5丁目14-1。最近車站為三田站（都營三田線/都營淺草線），從A3出口步行約3分鐘。",
       },
       {
         question: "有什麼菜品？",
@@ -146,7 +188,7 @@ const chatData: Record<string, {
       },
       {
         question: "레스토랑 위치는?",
-        answer: "도쿄도 미나토구 미타에 위치해 있습니다. 가장 가까운 역은 미타역(도에이 미타선/도에이 아사쿠사선)이며 A3 출구에서 도보 약 3분입니다.",
+        answer: "도쿄도 미나토구 시바 5-14-1에 위치해 있습니다. 가장 가까운 역은 미타역(도에이 미타선/도에이 아사쿠사선)이며 A3 출구에서 도보 약 3분입니다.",
       },
       {
         question: "메뉴는 어떤 것이 있나요?",
@@ -176,7 +218,7 @@ const chatData: Record<string, {
       },
       {
         question: "ร้านอยู่ที่ไหน?",
-        answer: "ตั้งอยู่ที่มิตะ มินาโตะ โตเกียว สถานีที่ใกล้ที่สุดคือสถานีมิตะ (สาย Toei Mita/Toei Asakusa) เดินจากทางออก A3 ประมาณ 3 นาที",
+        answer: "ตั้งอยู่ที่ชิบะ 5-14-1 มินาโตะ โตเกียว สถานีที่ใกล้ที่สุดคือสถานีมิตะ (สาย Toei Mita/Toei Asakusa) เดินจากทางออก A3 ประมาณ 3 นาที",
       },
       {
         question: "มีเมนูอะไรบ้าง?",
@@ -284,7 +326,7 @@ export function ChatWidget({ locale }: { locale: string }) {
       {/* Unread badge when closed */}
       {!open && !initialized && (
         <span className="fixed bottom-[4.5rem] right-6 z-50 px-3 py-1.5 bg-[#0a0a0a] border border-[#d4a853]/40 text-[#d4a853] text-xs rounded-lg shadow-lg animate-bounce pointer-events-none">
-          {locale === "en" ? "Need help?" : locale === "ko" ? "도움이 필요하세요?" : locale === "th" ? "ต้องการความช่วยเหลือ?" : "需要帮助？"}
+          {locale === "ja" ? "お手伝いしましょうか？" : locale === "en" ? "Need help?" : locale === "ko" ? "도움이 필요하세요?" : locale === "th" ? "ต้องการความช่วยเหลือ?" : "需要帮助？"}
         </span>
       )}
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 type Inquiry = {
@@ -22,6 +22,31 @@ export function AgencyActions({ inquiry }: { inquiry: Inquiry }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
+  const [translatedNotes, setTranslatedNotes] = useState<string | null>(null);
+  const [translating, setTranslating] = useState(false);
+
+  const translateNotes = useCallback(async () => {
+    if (!inquiry.notes || translatedNotes !== null) return;
+    setTranslating(true);
+    try {
+      const res = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: inquiry.notes, targetLang: "ja" }),
+      });
+      const data = await res.json();
+      setTranslatedNotes(data.translated || "翻訳に失敗しました");
+    } catch {
+      setTranslatedNotes("翻訳に失敗しました");
+    }
+    setTranslating(false);
+  }, [inquiry.notes, translatedNotes]);
+
+  useEffect(() => {
+    if (showDetail && inquiry.notes) {
+      translateNotes();
+    }
+  }, [showDetail, inquiry.notes, translateNotes]);
 
   async function handleStatusChange(status: string) {
     setLoading(true);
@@ -111,9 +136,19 @@ export function AgencyActions({ inquiry }: { inquiry: Inquiry }) {
                 <p>{inquiry.billingInfo}</p>
               </div>
               {inquiry.notes && (
-                <div className="col-span-2">
-                  <p className="text-gray-500">特記事項</p>
-                  <p>{inquiry.notes}</p>
+                <div className="col-span-2 space-y-2">
+                  <div>
+                    <p className="text-gray-500">特記事項（原文）</p>
+                    <p className="bg-gray-50 rounded p-2 whitespace-pre-wrap">{inquiry.notes}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500">翻訳（日本語）</p>
+                    {translating ? (
+                      <p className="text-gray-400 text-sm">翻訳中...</p>
+                    ) : (
+                      <p className="bg-blue-50 rounded p-2 whitespace-pre-wrap">{translatedNotes}</p>
+                    )}
+                  </div>
                 </div>
               )}
             </div>

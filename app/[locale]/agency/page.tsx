@@ -8,6 +8,37 @@ import { agencyInquirySchema, type AgencyInquiryInput } from "@/lib/validations"
 import Link from "next/link";
 
 const agencyLabels: Record<string, Record<string, string>> = {
+  ja: {
+    title: "旅行代理店予約",
+    titleJa: "旅行代理店予約",
+    subtitle: "9名様以上の団体のお客様",
+    back: "← 戻る",
+    agencyName: "旅行代理店名",
+    contactName: "担当者名",
+    email: "メールアドレス",
+    phone: "電話番号",
+    tourCode: "ツアーコード",
+    partySize: "人数（9名以上）",
+    visitDate: "ご希望の来店日時",
+    billingInfo: "請求先情報",
+    billingPlaceholder: "会社名、住所、インボイス番号...",
+    notes: "備考",
+    notesPlaceholder: "アレルギー、食事制限、特別なご要望...",
+    submit: "お問い合わせを送信",
+    submitting: "送信中...",
+    successTitle: "お問い合わせ受付完了",
+    successTitleJa: "お問い合わせ受付完了",
+    successBody: "お問い合わせありがとうございます。内容を確認の上、お支払いリンクをお送りいたします。",
+    backHome: "ホームに戻る",
+    sectionAgency: "代理店情報",
+    sectionVisit: "ご来店情報",
+    sectionBilling: "請求先・備考",
+    placeholderAgency: "株式会社○○旅行",
+    placeholderContact: "山田 太郎",
+    placeholderEmail: "contact@agency.com",
+    placeholderPhone: "+81...",
+    placeholderTourCode: "例: JPN-2024-001",
+  },
   en: {
     title: "Travel Agency Reservation",
     titleJa: "旅行代理店予約",
@@ -230,7 +261,7 @@ export default function AgencyPage() {
           {/* Agency Info */}
           <div className="bg-[#111] border border-[#222] p-6 space-y-5">
             <p className="text-[#d4a853] text-xs tracking-[0.3em] uppercase pb-3 border-b border-[#222]">
-              Agency Information
+              {t.sectionAgency || "Agency Information"}
             </p>
 
             <div className="grid grid-cols-2 gap-4">
@@ -288,7 +319,7 @@ export default function AgencyPage() {
           {/* Visit Details */}
           <div className="bg-[#111] border border-[#222] p-6 space-y-5">
             <p className="text-[#d4a853] text-xs tracking-[0.3em] uppercase pb-3 border-b border-[#222]">
-              Visit Details
+              {t.sectionVisit || "Visit Details"}
             </p>
 
             <div className="grid grid-cols-2 gap-4">
@@ -330,7 +361,7 @@ export default function AgencyPage() {
           {/* Billing & Notes */}
           <div className="bg-[#111] border border-[#222] p-6 space-y-5">
             <p className="text-[#d4a853] text-xs tracking-[0.3em] uppercase pb-3 border-b border-[#222]">
-              Billing & Notes
+              {t.sectionBilling || "Billing & Notes"}
             </p>
 
             <div>

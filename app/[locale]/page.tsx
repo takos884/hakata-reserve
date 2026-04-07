@@ -19,6 +19,24 @@ const content: Record<string, {
   reserveNow: string;
   inquire: string;
 }> = {
+  ja: {
+    hero: "博多一瑞亭",
+    heroJa: "博多一瑞亭",
+    tagline: "珠玉の一杯",
+    subtitle: "東京・三田 — 本場博多豚骨ラーメン",
+    individual: "個人・グループ予約",
+    individualDesc: "1〜8名様。オンライン決済で予約を確定できます。",
+    agency: "旅行代理店のお客様",
+    agencyDesc: "9名様以上の団体。お問い合わせ後、お支払いリンクをお送りします。",
+    address: "東京都港区芝5丁目14−1",
+    hours: "ランチ 11:00〜14:00 · ディナー 17:00〜21:00",
+    storyTitle: "ストーリー",
+    storyText: "豚骨ラーメン発祥の地・福岡博多で生まれた一瑞亭が、その魂を東京・三田の地に届けます。18時間以上じっくり炊き上げたスープは、濃厚でありながらまろやか。一杯一杯が珠玉の出会いです。",
+    menuTitle: "コース",
+    menuSubtitle: "お好みの体験をお選びください",
+    reserveNow: "予約する",
+    inquire: "お問い合わせ",
+  },
   en: {
     hero: "Hakata Issuitei",
     heroJa: "博多一瑞亭",
@@ -28,7 +46,7 @@ const content: Record<string, {
     individualDesc: "1–8 guests. Reserve online with secure payment.",
     agency: "Travel Agency",
     agencyDesc: "Groups of 9+. Submit an inquiry for a payment link.",
-    address: "Mita, Minato-ku, Tokyo",
+    address: "5-14-1 Shiba, Minato-ku, Tokyo",
     hours: "Lunch 11:00–14:00 · Dinner 17:00–21:00",
     storyTitle: "STORY",
     storyText: "Born in Hakata, Fukuoka — the birthplace of tonkotsu ramen — Issuitei has carried the soul of the original bowl to the heart of Tokyo's Mita district. Our broth simmers for over 18 hours, yielding a rich, creamy depth that no shortcut can replicate. Every visit is an encounter with a gem of a bowl.",
@@ -46,7 +64,7 @@ const content: Record<string, {
     individualDesc: "1–8位客人，在线支付确认预约。",
     agency: "旅行社咨询",
     agencyDesc: "9人以上团体，提交咨询后发送付款链接。",
-    address: "东京都港区三田",
+    address: "东京都港区芝5丁目14-1",
     hours: "午餐 11:00–14:00 · 晚餐 17:00–21:00",
     storyTitle: "故事",
     storyText: "一瑞亭诞生于豚骨拉面的发源地——福冈博多，如今将这份灵魂之味带到了东京三田。我们的汤底需熬制18小时以上，浓醇醇厚，每一碗都是珠玉般的享受。",
@@ -64,7 +82,7 @@ const content: Record<string, {
     individualDesc: "1–8位客人，線上付款確認預約。",
     agency: "旅行社諮詢",
     agencyDesc: "9人以上團體，提交諮詢後發送付款連結。",
-    address: "東京都港區三田",
+    address: "東京都港區芝5丁目14-1",
     hours: "午餐 11:00–14:00 · 晚餐 17:00–21:00",
     storyTitle: "故事",
     storyText: "一瑞亭誕生於豚骨拉麵的發源地——福岡博多，如今將這份靈魂之味帶到了東京三田。我們的湯底需熬製18小時以上，濃醇醇厚，每一碗都是珠玉般的享受。",
@@ -82,7 +100,7 @@ const content: Record<string, {
     individualDesc: "1–8명. 온라인 결제로 예약을 확정하세요.",
     agency: "여행사 문의",
     agencyDesc: "9명 이상 단체. 문의하시면 결제 링크를 보내드립니다.",
-    address: "도쿄도 미나토구 미타",
+    address: "도쿄도 미나토구 시바 5-14-1",
     hours: "런치 11:00–14:00 · 디너 17:00–21:00",
     storyTitle: "스토리",
     storyText: "돈코츠 라멘의 발상지 후쿠오카 하카타에서 탄생한 잇스이테이가, 도쿄 미타의 중심부에 그 정신을 이어오고 있습니다. 18시간 이상 끓인 육수는 깊고 진한 풍미를 자랑하며, 한 그릇 한 그릇이 보석과 같은 경험입니다.",
@@ -100,7 +118,7 @@ const content: Record<string, {
     individualDesc: "1–8 ท่าน ยืนยันการจองด้วยการชำระเงินออนไลน์",
     agency: "สอบถามสำหรับบริษัททัวร์",
     agencyDesc: "กลุ่ม 9 คนขึ้นไป ส่งคำขอแล้วเราจะส่งลิงก์ชำระเงินให้",
-    address: "มิตะ มินาโตะ โตเกียว",
+    address: "ชิบะ 5-14-1 มินาโตะ โตเกียว",
     hours: "กลางวัน 11:00–14:00 · เย็น 17:00–21:00",
     storyTitle: "เรื่องราว",
     storyText: "อิสซุยเตกำเนิดในฮากาตะ ฟุกุโอกะ บ้านเกิดของราเมนทงคตสึ และนำจิตวิญญาณของชามต้นตำรับมาสู่ย่านมิตะในโตเกียว น้ำซุปเคี่ยวกว่า 18 ชั่วโมง ให้ความเข้มข้นที่ไม่มีสูตรลัดใดเทียบได้",
@@ -112,6 +130,7 @@ const content: Record<string, {
 };
 
 const locales = [
+  { code: "ja", label: "日本語" },
   { code: "en", label: "EN" },
   { code: "zh-CN", label: "简体" },
   { code: "zh-TW", label: "繁體" },
@@ -429,12 +448,12 @@ export default async function HomePage({
                   {/* Price badge */}
                   <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm border border-[#d4a853]/40 px-4 py-2">
                     <p className="text-[#d4a853] text-lg font-light">{course.price}</p>
-                    <p className="text-gray-500 text-xs text-center">/ person</p>
+                    <p className="text-gray-500 text-xs text-center">{locale === "ja" ? "/ 1名様" : "/ person"}</p>
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-gray-200 text-lg font-light tracking-wider mb-1">{course.nameEn}</p>
-                  <p className="text-gray-600 text-sm tracking-wider">{course.nameJa}</p>
+                  <p className="text-gray-200 text-lg font-light tracking-wider mb-1">{locale === "ja" ? course.nameJa : course.nameEn}</p>
+                  {locale !== "ja" && <p className="text-gray-600 text-sm tracking-wider">{course.nameJa}</p>}
                 </div>
               </div>
             ))}
@@ -442,7 +461,7 @@ export default async function HomePage({
 
           {/* Side menu gallery */}
           <div className="mb-10">
-            <p className="text-center text-gray-600 text-xs tracking-[0.3em] uppercase mb-6">Side Menu & Drinks</p>
+            <p className="text-center text-gray-600 text-xs tracking-[0.3em] uppercase mb-6">{locale === "ja" ? "サイドメニュー・ドリンク" : "Side Menu & Drinks"}</p>
             <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
               {menuGallery.map((item, i) => (
                 <div key={i} className="relative aspect-square overflow-hidden border border-[#222] hover:border-[#d4a853]/30 transition-colors">
@@ -485,7 +504,9 @@ export default async function HomePage({
                   <p className="text-[#d4a853] text-xs tracking-[0.4em] uppercase mb-3">TAKE OUT</p>
                   <h3 className="text-3xl font-light text-white tracking-widest mb-3">お持ち帰り</h3>
                   <p className="text-gray-400 text-sm max-w-md leading-relaxed">
-                    Enjoy our authentic Hakata tonkotsu ramen at home. Available for takeout during business hours.
+                    {locale === "ja"
+                      ? "本場博多豚骨ラーメンをご自宅でもお楽しみいただけます。営業時間中はテイクアウトも承ります。"
+                      : "Enjoy our authentic Hakata tonkotsu ramen at home. Available for takeout during business hours."}
                   </p>
                 </div>
               </div>
@@ -511,7 +532,7 @@ export default async function HomePage({
           {/* Google Map embed placeholder */}
           <div className="relative aspect-[16/9] bg-[#141414] border border-[#333] overflow-hidden">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.5!2d139.7434!3d35.6484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDM4JzU0LjIiTiAxMznCsDQ0JzM2LjIiRQ!5e0!3m2!1sen!2sjp!4v1"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.0!2d139.7441!3d35.6505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bb38e7a3fff%3A0x0!2z5p2x5Lqs6YO95riv5Yy66Iqd77yV5LiB55uu77yR77yU4oiS77yR!5e0!3m2!1sja!2sjp!4v1"
               width="100%"
               height="100%"
               style={{ border: 0 }}
