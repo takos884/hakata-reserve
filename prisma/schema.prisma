@@ -52,20 +52,23 @@ model Reservation {
 }
 
 model AgencyInquiry {
-  id               String        @id @default(cuid())
-  agencyName       String
-  contactName      String
-  email            String
-  phone            String
-  tourCode         String?
-  visitDate        DateTime
-  partySize        Int
-  billingInfo      String
-  notes            String?
-  status           InquiryStatus @default(NEW)
-  stripePaymentLink String?
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id                    String        @id @default(cuid())
+  agencyName            String
+  contactName           String
+  email                 String
+  phone                 String
+  tourCode              String?
+  visitDate             DateTime
+  partySize             Int
+  billingInfo           String
+  notes                 String?
+  status                InquiryStatus @default(NEW)
+  stripePaymentLink     String?
+  stripePaymentIntentId String?
+  depositAmount         Int?
+  depositPaid           Boolean       @default(false)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
 
   @@index([visitDate])
   @@index([status])

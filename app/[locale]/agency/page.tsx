@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { agencyInquirySchema, type AgencyInquiryInput } from "@/lib/validations";
@@ -163,9 +163,9 @@ const labelClass = "block text-xs text-gray-400 tracking-widest uppercase mb-2";
 
 export default function AgencyPage() {
   const params = useParams();
+  const router = useRouter();
   const locale = (params.locale as string) || "en";
   const t = agencyLabels[locale] || agencyLabels.en;
-  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
   const {
@@ -179,51 +179,9 @@ export default function AgencyPage() {
 
   async function onSubmit(data: AgencyInquiryInput) {
     setError("");
-    const res = await fetch("/api/agency-inquiries", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (res.ok) {
-      setSubmitted(true);
-    } else {
-      setError("Failed to submit. Please try again.");
-    }
-  }
-
-  if (submitted) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0a] text-gray-100 flex items-center justify-center px-6">
-        <div className="max-w-md mx-auto text-center">
-          <div className="w-20 h-20 border border-[#d4a853]/40 flex items-center justify-center mx-auto mb-10">
-            <svg className="w-8 h-8 text-[#d4a853]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          </div>
-
-          <p className="text-[#d4a853] text-xs tracking-[0.4em] uppercase mb-3">{t.successTitleJa}</p>
-          <h1 className="text-3xl font-light text-gray-100 tracking-widest mb-6">{t.successTitle}</h1>
-
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="h-px w-8 bg-[#d4a853]/40" />
-            <div className="w-1 h-1 rounded-full bg-[#d4a853]/60" />
-            <div className="h-px w-8 bg-[#d4a853]/40" />
-          </div>
-
-          <div className="bg-[#111] border border-[#222] p-6 mb-8">
-            <p className="text-gray-400 text-sm leading-relaxed">{t.successBody}</p>
-          </div>
-
-          <Link
-            href={`/${locale}`}
-            className="inline-block px-10 py-4 border border-[#d4a853]/50 text-[#d4a853] text-sm font-light tracking-widest uppercase hover:bg-[#d4a853]/10 transition-colors"
-          >
-            {t.backHome}
-          </Link>
-        </div>
-      </div>
-    );
+    // Save to sessionStorage and redirect to deposit payment page
+    sessionStorage.setItem("agencyData", JSON.stringify(data));
+    router.push(`/${locale}/agency/confirm`);
   }
 
   return (

@@ -16,6 +16,9 @@ type Inquiry = {
   notes: string | null;
   status: string;
   stripePaymentLink: string | null;
+  stripePaymentIntentId: string | null;
+  depositAmount: number | null;
+  depositPaid: boolean;
 };
 
 export function AgencyActions({ inquiry }: { inquiry: Inquiry }) {
@@ -130,6 +133,19 @@ export function AgencyActions({ inquiry }: { inquiry: Inquiry }) {
               <div>
                 <p className="text-gray-500">人数</p>
                 <p>{inquiry.partySize}名</p>
+              </div>
+              <div>
+                <p className="text-gray-500">預り金</p>
+                <p>
+                  {inquiry.depositAmount
+                    ? `¥${inquiry.depositAmount.toLocaleString()}`
+                    : "-"}
+                  {inquiry.depositPaid ? (
+                    <span className="ml-2 text-green-600 text-xs font-medium">済</span>
+                  ) : inquiry.depositAmount ? (
+                    <span className="ml-2 text-orange-600 text-xs font-medium">未入金</span>
+                  ) : null}
+                </p>
               </div>
               <div className="col-span-2">
                 <p className="text-gray-500">請求先情報</p>
