@@ -1,4 +1,5 @@
 {
+  "functionRegion": "sin1",
   "functions": {
     "app/**/*.ts": {
       "maxDuration": 30
