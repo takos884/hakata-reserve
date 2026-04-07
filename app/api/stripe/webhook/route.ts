@@ -92,30 +92,49 @@ export async function POST(request: NextRequest) {
         const lang = reservation.lang || "en";
         const cancelUrl = `${baseUrl}/${lang}/reserve/cancel?id=${reservation.id}`;
 
+        const emailT: Record<string, { subject: string; title: string; greeting: string; body: string; date: string; time: string; partySize: string; course: string; amount: string; closing: string; cancelNote: string; cancelLink: string; persons: string }> = {
+          ja: { subject: "ご予約確認 - 博多一瑞亭", title: "ご予約が確定しました", greeting: `${reservation.name} 様`, body: "ご予約の詳細は以下の通りです：", date: "日付", time: "時間", partySize: "人数", course: "コース", amount: "お支払い金額", closing: "ご来店を心よりお待ちしております。", cancelNote: "ご予約のキャンセルをご希望の場合は、以下のリンクからお手続きください。", cancelLink: "予約をキャンセルする", persons: "名" },
+          en: { subject: "Reservation Confirmed - Hakata Issuitei", title: "Your reservation is confirmed!", greeting: `Dear ${reservation.name},`, body: "Your reservation details:", date: "Date", time: "Time", partySize: "Party Size", course: "Course", amount: "Amount Paid", closing: "We look forward to seeing you!", cancelNote: "If you need to cancel your reservation, please use the link below.", cancelLink: "Cancel Reservation", persons: " guests" },
+          "zh-CN": { subject: "预约确认 - 博多一瑞亭", title: "您的预约已确认！", greeting: `${reservation.name} 您好，`, body: "以下是您的预约详情：", date: "日期", time: "时间", partySize: "人数", course: "套餐", amount: "已付金额", closing: "期待您的光临！", cancelNote: "如需取消预约，请点击以下链接。", cancelLink: "取消预约", persons: "人" },
+          "zh-TW": { subject: "預約確認 - 博多一瑞亭", title: "您的預約已確認！", greeting: `${reservation.name} 您好，`, body: "以下是您的預約詳情：", date: "日期", time: "時間", partySize: "人數", course: "套餐", amount: "已付金額", closing: "期待您的光臨！", cancelNote: "如需取消預約，請點擊以下連結。", cancelLink: "取消預約", persons: "人" },
+          ko: { subject: "예약 확인 - 하카타 잇스이테이", title: "예약이 확정되었습니다!", greeting: `${reservation.name}님,`, body: "예약 상세 정보:", date: "날짜", time: "시간", partySize: "인원", course: "코스", amount: "결제 금액", closing: "방문을 기다리겠습니다!", cancelNote: "예약을 취소하시려면 아래 링크를 이용해 주세요.", cancelLink: "예약 취소", persons: "명" },
+          th: { subject: "ยืนยันการจอง - ฮากาตะ อิสซุยเต", title: "การจองของคุณได้รับการยืนยันแล้ว!", greeting: `เรียน ${reservation.name},`, body: "รายละเอียดการจองของคุณ:", date: "วันที่", time: "เวลา", partySize: "จำนวนคน", course: "คอร์ส", amount: "ยอดชำระ", closing: "เราหวังว่าจะได้พบคุณ!", cancelNote: "หากต้องการยกเลิกการจอง กรุณาใช้ลิงก์ด้านล่าง", cancelLink: "ยกเลิกการจอง", persons: " คน" },
+        };
+        const et = emailT[lang] || emailT.en;
+
+        const courseNameMap: Record<string, string> = {
+          ja: reservation.course?.nameJa || "-",
+          en: reservation.course?.nameEn || "-",
+          "zh-CN": reservation.course?.nameZhCN || "-",
+          "zh-TW": reservation.course?.nameZhTW || "-",
+          ko: reservation.course?.nameKo || "-",
+          th: reservation.course?.nameTh || "-",
+        };
+
         await resend.emails.send({
           from: FROM_EMAIL,
           to: reservation.email,
-          subject: lang === "ja" ? "ご予約確認 - 博多一瑞亭" : "Reservation Confirmed - Hakata Issuitei",
+          subject: et.subject,
           html: `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
               <div style="background: #d4a853; color: #000; padding: 20px; text-align: center;">
-                <h1 style="margin: 0; font-size: 20px;">${lang === "ja" ? "ご予約が確定しました" : "Your reservation is confirmed!"}</h1>
+                <h1 style="margin: 0; font-size: 20px;">${et.title}</h1>
               </div>
               <div style="background: #ffffff; border: 1px solid #e5e7eb; padding: 24px;">
-                <p>${lang === "ja" ? `${reservation.name} 様` : `Dear ${reservation.name},`}</p>
-                <p>${lang === "ja" ? "ご予約の詳細は以下の通りです：" : "Your reservation details:"}</p>
+                <p>${et.greeting}</p>
+                <p>${et.body}</p>
                 <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
-                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${lang === "ja" ? "日付" : "Date"}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.visitDate.toLocaleDateString(lang === "ja" ? "ja-JP" : "en-US")}</td></tr>
-                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${lang === "ja" ? "時間" : "Time"}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.visitTime}</td></tr>
-                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${lang === "ja" ? "人数" : "Party Size"}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.partySize}${lang === "ja" ? "名" : " guests"}</td></tr>
-                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${lang === "ja" ? "コース" : "Course"}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${lang === "ja" ? (reservation.course?.nameJa || "-") : (reservation.course?.nameEn || "-")}</td></tr>
-                  <tr><td style="padding: 8px; color: #666;">${lang === "ja" ? "お支払い金額" : "Amount Paid"}</td><td style="padding: 8px; font-weight: bold;">¥${reservation.amountPaid?.toLocaleString()}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${et.date}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.visitDate.toLocaleDateString(lang === "ja" ? "ja-JP" : lang === "ko" ? "ko-KR" : lang === "th" ? "th-TH" : lang.startsWith("zh") ? "zh-CN" : "en-US")}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${et.time}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.visitTime}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${et.partySize}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.partySize}${et.persons}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${et.course}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${courseNameMap[lang] || courseNameMap.en}</td></tr>
+                  <tr><td style="padding: 8px; color: #666;">${et.amount}</td><td style="padding: 8px; font-weight: bold;">¥${reservation.amountPaid?.toLocaleString()}</td></tr>
                 </table>
-                <p>${lang === "ja" ? "ご来店を心よりお待ちしております。" : "We look forward to seeing you!"}</p>
+                <p>${et.closing}</p>
                 <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
-                <p style="font-size: 13px; color: #888;">${lang === "ja" ? "ご予約のキャンセルをご希望の場合は、以下のリンクからお手続きください。" : "If you need to cancel your reservation, please use the link below."}</p>
+                <p style="font-size: 13px; color: #888;">${et.cancelNote}</p>
                 <p style="text-align: center; margin: 16px 0;">
-                  <a href="${cancelUrl}" style="color: #d4a853; font-size: 13px;">${lang === "ja" ? "予約をキャンセルする" : "Cancel Reservation"}</a>
+                  <a href="${cancelUrl}" style="color: #d4a853; font-size: 13px;">${et.cancelLink}</a>
                 </p>
                 <p style="font-size: 12px; color: #aaa;">博多一瑞亭 / Hakata Issuitei<br/>東京都港区芝5丁目14-1</p>
               </div>
