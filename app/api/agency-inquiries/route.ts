@@ -7,6 +7,7 @@ import { resend, FROM_EMAIL } from "@/lib/mail";
 const DEPOSIT_AMOUNT = 20000; // ¥20,000
 
 export async function POST(request: NextRequest) {
+  try {
   const body = await request.json();
   const parsed = agencyInquirySchema.safeParse(body);
 
@@ -48,30 +49,41 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  // Notify store about new inquiry
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: process.env.ADMIN_EMAIL!,
-    subject: `新規代理店問い合わせ: ${data.agencyName} (${data.partySize}名)`,
-    html: `
-      <h2>新規代理店問い合わせ</h2>
-      <ul>
-        <li>代理店名: ${data.agencyName}</li>
-        <li>担当者: ${data.contactName}</li>
-        <li>メール: ${data.email}</li>
-        <li>電話: ${data.phone}</li>
-        <li>来店希望日: ${data.visitDate}</li>
-        <li>人数: ${data.partySize}名</li>
-        <li>ツアーコード: ${data.tourCode || "-"}</li>
-        <li>預り金: ¥${DEPOSIT_AMOUNT.toLocaleString()} (決済待ち)</li>
-      </ul>
-      <p><a href="${process.env.NEXTAUTH_URL}/admin/agencies">管理画面で確認</a></p>
-    `,
-  });
+  // Notify store about new inquiry (non-blocking)
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: process.env.ADMIN_EMAIL!,
+      subject: `新規代理店問い合わせ: ${data.agencyName} (${data.partySize}名)`,
+      html: `
+        <h2>新規代理店問い合わせ</h2>
+        <ul>
+          <li>代理店名: ${data.agencyName}</li>
+          <li>担当者: ${data.contactName}</li>
+          <li>メール: ${data.email}</li>
+          <li>電話: ${data.phone}</li>
+          <li>来店希望日: ${data.visitDate}</li>
+          <li>人数: ${data.partySize}名</li>
+          <li>ツアーコード: ${data.tourCode || "-"}</li>
+          <li>預り金: ¥${DEPOSIT_AMOUNT.toLocaleString()} (決済待ち)</li>
+        </ul>
+        <p><a href="${process.env.NEXTAUTH_URL}/admin/agencies">管理画面で確認</a></p>
+      `,
+    });
+  } catch (e) {
+    console.error("Failed to send notification email:", e);
+  }
 
   return NextResponse.json({
     inquiryId: inquiry.id,
     clientSecret: paymentIntent.client_secret,
     depositAmount: DEPOSIT_AMOUNT,
   }, { status: 201 });
+  } catch (error) {
+    console.error("Agency inquiry error:", error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
