@@ -88,23 +88,38 @@ export async function POST(request: NextRequest) {
         });
 
         // Send confirmation email to customer
+        const baseUrl = process.env.NEXTAUTH_URL || "https://hakata-reserve.vercel.app";
+        const lang = reservation.lang || "en";
+        const cancelUrl = `${baseUrl}/${lang}/reserve/cancel?id=${reservation.id}`;
+
         await resend.emails.send({
           from: FROM_EMAIL,
           to: reservation.email,
-          subject: "Reservation Confirmed - Hakata Issuitei",
+          subject: lang === "ja" ? "ご予約確認 - 博多一瑞亭" : "Reservation Confirmed - Hakata Issuitei",
           html: `
-            <h2>Your reservation is confirmed!</h2>
-            <p>Dear ${reservation.name},</p>
-            <p>Your reservation details:</p>
-            <ul>
-              <li>Date: ${reservation.visitDate.toLocaleDateString("en-US")}</li>
-              <li>Time: ${reservation.visitTime}</li>
-              <li>Party size: ${reservation.partySize}</li>
-              <li>Course: ${reservation.course?.nameEn || "-"}</li>
-              <li>Amount paid: ¥${reservation.amountPaid?.toLocaleString()}</li>
-            </ul>
-            <p>We look forward to seeing you!</p>
-            <p>Hakata Issuitei<br/>5-14-1 Shiba, Minato-ku, Tokyo</p>
+            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+              <div style="background: #d4a853; color: #000; padding: 20px; text-align: center;">
+                <h1 style="margin: 0; font-size: 20px;">${lang === "ja" ? "ご予約が確定しました" : "Your reservation is confirmed!"}</h1>
+              </div>
+              <div style="background: #ffffff; border: 1px solid #e5e7eb; padding: 24px;">
+                <p>${lang === "ja" ? `${reservation.name} 様` : `Dear ${reservation.name},`}</p>
+                <p>${lang === "ja" ? "ご予約の詳細は以下の通りです：" : "Your reservation details:"}</p>
+                <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${lang === "ja" ? "日付" : "Date"}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.visitDate.toLocaleDateString(lang === "ja" ? "ja-JP" : "en-US")}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${lang === "ja" ? "時間" : "Time"}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.visitTime}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${lang === "ja" ? "人数" : "Party Size"}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${reservation.partySize}${lang === "ja" ? "名" : " guests"}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">${lang === "ja" ? "コース" : "Course"}</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${lang === "ja" ? (reservation.course?.nameJa || "-") : (reservation.course?.nameEn || "-")}</td></tr>
+                  <tr><td style="padding: 8px; color: #666;">${lang === "ja" ? "お支払い金額" : "Amount Paid"}</td><td style="padding: 8px; font-weight: bold;">¥${reservation.amountPaid?.toLocaleString()}</td></tr>
+                </table>
+                <p>${lang === "ja" ? "ご来店を心よりお待ちしております。" : "We look forward to seeing you!"}</p>
+                <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+                <p style="font-size: 13px; color: #888;">${lang === "ja" ? "ご予約のキャンセルをご希望の場合は、以下のリンクからお手続きください。" : "If you need to cancel your reservation, please use the link below."}</p>
+                <p style="text-align: center; margin: 16px 0;">
+                  <a href="${cancelUrl}" style="color: #d4a853; font-size: 13px;">${lang === "ja" ? "予約をキャンセルする" : "Cancel Reservation"}</a>
+                </p>
+                <p style="font-size: 12px; color: #aaa;">博多一瑞亭 / Hakata Issuitei<br/>東京都港区芝5丁目14-1</p>
+              </div>
+            </div>
           `,
         });
 
